@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, updateProfile } from '../controllers/user.controller.js';
+import { register, login, updateProfile, logout } from '../controllers/user.controller.js';
 import isAuthenticated from '../middlewares/isAuthenticate.js';
 
 const router = express.Router();
@@ -9,6 +9,7 @@ router.post('/register', register);
 
 // User login route
 router.post('/login', login);
+router.get('/logout',logout);
 
 // Profile update (protected)
 router.post('/profile/update', isAuthenticated, updateProfile);

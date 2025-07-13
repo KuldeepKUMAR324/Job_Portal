@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './utils/db.js';
 import userRoutes from './routes/user.route.js';
+import companyRoutes from './routes/company.route.js';  
 
 dotenv.config(); // No need for empty {}
 
@@ -31,6 +32,7 @@ app.get('/home', (req, res) => {
 
 // API routes
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/company', companyRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 8000;

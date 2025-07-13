@@ -43,7 +43,7 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({ message: 'All fields are required', success: false });
+            return res.status(400).json({ message: 'something missing s', success: false });
         }
 
         // Check if user exists
@@ -107,23 +107,25 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
-
-        if (!fullname || !email || !phoneNumber || !bio || !skills) {
-            return res.status(400).json({ message: 'All fields are required', success: false });
-        }
+        const file= req.file;
+        let skillsArray; // Assuming you're using multer for file uploads
+          if(skills){
+            skillsArray=skills.split(",");
+          }
+        
 
         const userId = req.id;
         let user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found', success: false });
         }
+        if(fullname) user.fullname = fullname;
+        if(email) user.email = email;
+        if(phoneNumber) user.phoneNumber = phoneNumber;
+        if(bio) user.profile.bio = bio;
+        if(skills) user.profile.skills = skills.split(",");
 
-        // Update profile fields
-        user.fullname = fullname;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.profile.bio = bio;
-        user.profile.skills = skills.split(",");
+
 
         // TODO: Add resume/profile photo upload later
 
