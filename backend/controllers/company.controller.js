@@ -63,6 +63,7 @@ import Company from '../models/company.model.js';
             if (!companies || companies.length === 0) {
                 return res.status(404).json({ message: 'No companies found', success: false });
             }
+            return res.status(200).json({ message: 'Companies fetched successfully', companies, success: true });
             
         } catch (error) {
             console.log('Error fetching company:', error);

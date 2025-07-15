@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import connectDB from './utils/db.js';
 import userRoutes from './routes/user.route.js';
 import companyRoutes from './routes/company.route.js';  
+import jobRoutes from './routes/job.route.js';
 
 dotenv.config(); // No need for empty {}
 
@@ -33,11 +34,12 @@ app.get('/home', (req, res) => {
 // API routes
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/company', companyRoutes);
+app.use('/api/v1/job', jobRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 8000;
 connectDB(); // Connect to DB first
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(` Server is running on port ${PORT}`);
 });

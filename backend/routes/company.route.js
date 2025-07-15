@@ -8,10 +8,10 @@ const router = express.Router();
 // Register a new company (protected)
 router.route('/register').post(isAuthenticated,registerCompany);
 
-router.route('/get').post(isAuthenticated,getCompany);
+router.route('/get').get(isAuthenticated,getCompany);
 // Get company by ID (protected)
 router.route('/get/:id').get(isAuthenticated, getCompanyById);
 // Update company details (protected)
-router.route('/update/:id').post(isAuthenticated, updateCompany);
+router.route('/update/:id').put(isAuthenticated, updateCompany);
 
 export default router;
