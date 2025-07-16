@@ -23,4 +23,4 @@ const applicationSchema = new mongoose.Schema(
 );
 
 // Corrected model name to match the schema variable
-export const Application = mongoose.model('Application', applicationSchema);
+ export default mongoose.model('Application', applicationSchema);
