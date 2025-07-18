@@ -22,9 +22,10 @@ const Navbar = () => {
 
             <div className='flex items-center gap-6'>
                 <ul className='flex font-medium items-center gap-6 list-none'>
-                    <li className='cursor-pointer'>Home</li>
-                    <li className='cursor-pointer'>Jobs</li>
-                    <li className='cursor-pointer'>Browse</li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/jobs">Jobs</Link></li>
+                    <li><Link to="/browse">Browse</Link></li>
+                    
                 </ul>
 
                 {!user ? (
