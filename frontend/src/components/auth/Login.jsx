@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '@/redux/authSlice';
+import { setLoading, setUser } from '@/redux/authSlice';
 import { Loader2 } from 'lucide-react';
 
 const Login = () => {
@@ -18,10 +18,10 @@ const Login = () => {
     password: '',
     role: ''
   });
-  const {loading}=useSelector(store=>store.auth);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({
@@ -33,9 +33,9 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-
     try {
       dispatch(setLoading(true));
+
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json"
@@ -44,13 +44,14 @@ const Login = () => {
       });
 
       if (res.data.success) {
-        navigate("/");
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
+        navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data?.message || "Login failed");
-    }finally{
+    } finally {
       dispatch(setLoading(false));
     }
   };
@@ -72,6 +73,7 @@ const Login = () => {
               onChange={changeEventHandler}
               placeholder="kuldeep.kumar@gmail.com"
               className='mb-4'
+              required
             />
           </div>
 
@@ -85,6 +87,7 @@ const Login = () => {
               onChange={changeEventHandler}
               placeholder="********"
               className='mb-4'
+              required
             />
           </div>
 
@@ -99,7 +102,7 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="r1">Student</Label>
+                <Label>Student</Label>
               </div>
               <div className="flex items-center gap-3">
                 <Input
@@ -110,17 +113,21 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <Label>Recruiter</Label>
               </div>
             </RadioGroup>
           </div>
+
           {
-            loading ? <Button className="w-full my-4"><Loader2 className='mr-2 h-4 w-4 animate-spin'/>Please wait</Button>:
-             <Button type="submit" className="w-full my-4">Login</Button>
-
+            loading ? (
+              <Button className="w-full my-4" disabled>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                Please wait
+              </Button>
+            ) : (
+              <Button type="submit" className="w-full my-4">Login</Button>
+            )
           }
-
-          {/* //<Button type="submit" className="w-full my-4">Login</Button> */}
 
           <span className='text-sm text-gray-500'>
             Don't have an account? <Link to="/signup" className='text-blue-500 hover:underline'>Signup</Link>
