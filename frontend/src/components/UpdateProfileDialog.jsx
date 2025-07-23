@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogFooter,
   DialogTitle,
+  DialogDescription, // ✅ Added this
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -26,7 +27,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     phoneNumber: user?.phoneNumber || '',
     bio: user?.profile?.bio || '',
     skills: user?.profile?.skills || [],
-    file: null,
+    file: user?.profile?.resume
   });
 
   const dispatch = useDispatch();
@@ -77,9 +78,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
+    console.log(input);
   };
 
   return (
@@ -87,6 +88,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile. All fields are editable.
+          </DialogDescription>
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={submitHandler}>

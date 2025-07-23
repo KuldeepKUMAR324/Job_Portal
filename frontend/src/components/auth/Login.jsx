@@ -45,7 +45,10 @@ const Login = () => {
 
       if (res.data.success) {
         dispatch(setUser(res.data.user));
-        toast.success(res.data.message);
+       toast(res.data.message, {
+  className: "bg-green-600 text-white", 
+  icon: "✅", 
+});
         navigate("/");
       }
     } catch (error) {

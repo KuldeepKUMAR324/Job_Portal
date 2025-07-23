@@ -63,7 +63,10 @@ const Signup = () => {
 
       if (res.data.success) {
         navigate("/login");
-        toast.success(res.data.message);
+       toast(res.data.message, {
+         className: "bg-green-600 text-white", 
+         icon: "✅", 
+       });
       }
     } catch (error) {
       console.log(error);
@@ -159,17 +162,6 @@ const Signup = () => {
             </div>
           </RadioGroup>
 
-          <div className='flex items-center gap-2 my-4'>
-            <Label htmlFor="file">Profile</Label>
-            <Input
-              id="file"
-              type="file"
-              name="file"
-              accept="image/*"
-              onChange={changeFileHandler}
-              className='cursor-pointer'
-            />
-          </div>
 
           {
             loading ? (
