@@ -1,16 +1,19 @@
-import React, { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 import './index.css';
-import App from './App.jsx';
-import { Toaster } from './components/ui/sonner';
 import { Provider } from 'react-redux';
-import store from './redux/store'; // ✅ Correct default import
+import store, { persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Toaster } from './components/ui/sonner'; // ✅ Ensure this path is correct
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <Provider store={store}>
-      <App />
-      <Toaster />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+      <Toaster /> {/* ✅ This renders the toast notifications */}
     </Provider>
-  </StrictMode>
+  </React.StrictMode>
 );
